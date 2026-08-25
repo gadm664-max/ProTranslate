@@ -16,6 +16,10 @@ jobs:
     name: Build installable LinguaBridge APK
     runs-on: ubuntu-latest
     timeout-minutes: 35
+    env:
+      EXPO_PUBLIC_API_BASE_URL: ${{ vars.LINGUABRIDGE_API_BASE_URL || 'https://3000-i2dcfl9dv0hut0iy91k0e-98662c2b.us3.manus.computer' }}
+      EXPO_PUBLIC_OAUTH_PORTAL_URL: https://manus.im
+      EXPO_PUBLIC_APP_ID: eUmLC9Chy9q6GHCtjWu8xq
     steps:
       - name: Check out source
         uses: actions/checkout@v4
