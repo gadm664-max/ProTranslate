@@ -1,6 +1,6 @@
 import type { ExpoConfig } from "expo/config";
 
-const config: ExpoConfig = {
+const config: ExpoConfig & { newArchEnabled?: boolean } = {
   name: "LinguaBridge",
   slug: "linguabridge-mobile",
   version: "1.0.0",
