@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - "mobile/linguabridge-expo/**"
+      - "mobile/linguabridge-contracts/**"
       - ".github/workflows/build-linguabridge-android.yml"
 
 permissions:
