@@ -1,0 +1,60 @@
+name: Build LinguaBridge Android Preview APK
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "mobile/linguabridge-expo/**"
+      - ".github/workflows/build-linguabridge-android.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  build-android-apk:
+    name: Build installable LinguaBridge APK
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+          cache-dependency-path: mobile/linguabridge-expo/pnpm-lock.yaml
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Enable pnpm
+        run: corepack enable
+
+      - name: Install JavaScript dependencies
+        working-directory: mobile/linguabridge-expo
+        run: pnpm install --frozen-lockfile
+
+      - name: Verify application types
+        working-directory: mobile/linguabridge-expo
+        run: pnpm check
+
+      - name: Generate Android native project
+        working-directory: mobile/linguabridge-expo
+        run: npx expo prebuild --platform android --non-interactive --no-install
+
+      - name: Assemble debug APK
+        working-directory: mobile/linguabridge-expo/android
+        run: ./gradlew assembleDebug --no-daemon
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: LinguaBridge-Android-preview-APK
+          path: mobile/linguabridge-expo/android/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
+          retention-days: 14
