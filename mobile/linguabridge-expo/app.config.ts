@@ -7,6 +7,7 @@ const config: ExpoConfig = {
   orientation: "portrait",
   scheme: "linguabridge",
   userInterfaceStyle: "light",
+  newArchEnabled: false,
   ios: { supportsTablet: true, bundleIdentifier: "space.manus.linguabridge.mobile" },
   android: { package: "space.manus.linguabridge.mobile", versionCode: 1, permissions: ["RECORD_AUDIO"] },
   plugins: [
