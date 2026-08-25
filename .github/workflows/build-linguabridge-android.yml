@@ -19,10 +19,15 @@ jobs:
       - name: Check out source
         uses: actions/checkout@v4
 
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: pnpm
           cache-dependency-path: mobile/linguabridge-expo/pnpm-lock.yaml
 
@@ -31,9 +36,6 @@ jobs:
         with:
           distribution: temurin
           java-version: "17"
-
-      - name: Enable pnpm
-        run: corepack enable
 
       - name: Install JavaScript dependencies
         working-directory: mobile/linguabridge-expo
